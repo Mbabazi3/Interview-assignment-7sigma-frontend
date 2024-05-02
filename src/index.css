@@ -1,13 +1,143 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Lato:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: "Lato", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fff;
+  color: #2f4444;
+  min-height: 100vh;
+}
+
+header {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+header img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid #758a8a;
+  filter: drop-shadow(0 0 4px rgba(31, 42, 42, 0.5));
+}
+
+header h1 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  margin: 1rem 0;
+  letter-spacing: 0.2rem;
+  color: #2f4444;
+}
+
+.form {
+  width: 90%;
+  max-width: 60rem;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.form h2 {
+  font-size: 26px;
+  margin-bottom: 38px;
+}
+
+.control label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: #2f4444;
+  font-weight: bold;
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px;
+}
+
+.control input {
+  display: block;
+  width: 100%;
+  max-width: 45rem;
+  padding: 14px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid #758a8a;
+  color: #142020;
+  margin-bottom: 38px;
+}
+
+.control input:focus {
+  outline: none;
+  border: 2px solid #319890;
+}
+
+.button {
+  width: 90%;
+  max-width: 45rem;
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 2px solid grey;
+  background-color: #06b7a8;
+  color: #eeee;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #319890;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #eee;
+}
+
+.nav-logo {
+  display: flex;
+  gap: 10px;
+  height: 60px;
+  margin: 8px 0px 25px 50px;
+}
+
+.nav-logo img {
+  width: 80px;
+}
+
+.logoutActions {
+  text-align: center;
+}
+
+.logoutBtn {
+  width: 90%;
+  max-width: 45rem;
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: none;
+  background-color: #06b7a8;
+  color: #eeee;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 22px 80px 0px 0px;
+  outline: none;
+}
+
+.logoutBtn:hover {
+  outline: none;
+  background-color: #319890;
+}
+
+.home {
+  margin-top: 100px;
+  text-align: center;
 }
