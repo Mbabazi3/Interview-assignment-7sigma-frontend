@@ -8,6 +8,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
+    localStorage.removeItem("token");
     dispatch(logout());
   };
 

@@ -72,9 +72,20 @@ header h1 {
   margin-bottom: 38px;
 }
 
+.control input.input-error {
+  border: 2px solid #ff4d4d;
+}
+
 .control input:focus {
   outline: none;
   border: 2px solid #319890;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 20px;
+  padding-top: 2px;
+  /* border: 1px solid #ff4d4d; */
 }
 
 .button {
@@ -140,4 +151,59 @@ header h1 {
 .home {
   margin-top: 100px;
   text-align: center;
+}
+
+.sucess-msg {
+  font-size: 18px;
+  font-weight: 600;
+  color: #048504;
+}
+
+.error-msg {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff4d4d;
+}
+.upload {
+}
+
+.input-upload {
+  /* display: block;
+  width: 100%;
+  max-width: 45rem;
+  padding: 14px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid #758a8a;
+  color: #142020;
+  margin-bottom: 38px; */
+  width: 100%;
+  padding: 14px;
+  text-align: center;
+  margin-left: 200px;
+}
+
+.form-upload label {
+  background-color: indigo;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.uploadBtn {
+  width: 132px;
+  max-width: 45rem;
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: none;
+  background-color: #06b7a8;
+  color: #eeee;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 22px 80px 0px 0px;
+  outline: none;
 }

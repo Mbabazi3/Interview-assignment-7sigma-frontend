@@ -1,89 +1,98 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
+import axios from "axios";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { loginValidation } from "./loginValidation";
 
 export default function Login() {
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const dispatch = useDispatch();
 
-  const loginFunction = (userCredentials) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userCredentials),
-    };
+  // const loginHandler = async (username, password) => {
 
-    fetch("http://localhost:5000/auth/login", requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response:", data);
-        dispatch(login(data));
-      })
-      .catch((error) => {
-        console.error("Error:", error.message);
-      });
-  };
+  // };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const userInfo = { username: enteredUsername, password: enteredPassword };
-
-    console.log(userInfo);
-    setEnteredPassword("");
-    setEnteredUsername("");
-
-    loginFunction(userInfo);
-
-    ////perform Authetication using the Api
-
-    // dispatch(login(userInfo));
-  };
+  // curl -X POST -H "Content-Type: multipart/form-data" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidXNlcjEiLCJpYXQiOjE3MTUwMTMwMTYsImV4cCI6MzYwMTcxNTAxMzAxNn0.Pk-6M_OWCiqwQn8RVddjtP9n6sHVtvcxv1ZqO6mGS0c" -F "file=./pic.png" http://localhost:3000/upload/upload
 
   return (
-    <form className="form" onSubmit={submitHandler}>
-      <h2>Login</h2>
+    <Formik
+      initialValues={{ username: "", password: "" }}
+      validationSchema={loginValidation}
+      onSubmit={async (values, { resetForm }) => {
+        setIsSubmitting();
+        await axios
+          .post("http://localhost:5001/auth/login", values)
+          .then((response) => {
+            const resData = response.data;
+            const token = resData.jwtToken;
+            localStorage.setItem("token", token);
 
-      <div className="control-row">
-        <div className="control no-margin">
-          <label htmlFor="email">Username</label>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            placeholder="Enter Username"
-            onChange={(event) => {
-              setEnteredUsername(event.target.value);
-            }}
-            value={enteredUsername}
-          />
-        </div>
+            dispatch(login(resData));
+            setStatusMessage(resData.message);
+          })
+          .catch((error) => {
+            console.log(error);
+            setStatusMessage(error.response.data.message);
+          })
+          .finally(() => {
+            resetForm();
+            setIsSubmitting(false);
+          });
+      }}
+    >
+      {(formik) => {
+        const { errors, touched, handleSubmit } = formik;
+        return (
+          <Form className="form" onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <div className="control-row">
+              <div className="control no-margin">
+                <label htmlFor="email">Username</label>
+                <ErrorMessage name="username" component="p" className="error" />
+                <Field
+                  id="username"
+                  type="text"
+                  name="username"
+                  placeholder="Enter Username"
+                  className={
+                    errors.username && touched.username ? "input-error" : null
+                  }
+                />
+              </div>
 
-        <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Enter Password"
-            onChange={(event) => {
-              setEnteredPassword(event.target.value);
-            }}
-            value={enteredPassword}
-          />
-        </div>
+              <div className="control no-margin">
+                <label htmlFor="password">Password</label>
+                <ErrorMessage name="password" component="p" className="error" />
+                <Field
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  className={
+                    errors.password && touched.password ? "input-error" : null
+                  }
+                />
+              </div>
 
-        <button type="submit" className="button">
-          Login
-        </button>
-      </div>
-    </form>
+              <button type="submit" className="button">
+                Login
+              </button>
+            </div>
+            <p
+              className={
+                statusMessage === "Login Successful"
+                  ? "sucess-msg"
+                  : "error-msg"
+              }
+            >
+              {!isSubmitting && statusMessage}
+            </p>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
